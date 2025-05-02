@@ -1,5 +1,6 @@
 package com.dotsehyde;
 
+import com.dotsehyde.Models.Generic.PaginatedDto;
 import com.dotsehyde.Models.Student.StudentDto;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.hibernate.annotations.Array;
 
 import java.util.List;
 
@@ -56,5 +58,19 @@ public class StudentController {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(student).build();
+    }
+
+    @GET
+    @Operation(summary = "Get all students")
+    @Path("/all")
+    @APIResponse(
+            responseCode = "200",
+            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(implementation = PaginatedDto.class)
+            )
+    )
+    public Response getAllStudents() {
+        return Response.ok(studentService.getAllStudents()).build();
     }
 }

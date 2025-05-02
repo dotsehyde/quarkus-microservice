@@ -1,10 +1,14 @@
 package com.dotsehyde;
 
+import com.dotsehyde.Models.Generic.PaginatedDto;
 import com.dotsehyde.Models.Student.Student;
 import com.dotsehyde.Models.Student.StudentDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class StudentService {
@@ -29,7 +33,11 @@ public class StudentService {
         return StudentDto.StudentData.from(student);
     }
 
-    public Student findByName(String name) {
-        return studentRepo.findByName(name);
+    public PaginatedDto<StudentDto.StudentData> getAllStudents() {
+        var data = studentRepo.findAll();
+        return new PaginatedDto<>(
+                data.stream().count(),
+                data.stream().map(StudentDto.StudentData::from).collect(Collectors.toList())
+        );
     }
 }
