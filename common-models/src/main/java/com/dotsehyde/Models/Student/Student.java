@@ -1,6 +1,6 @@
 package com.dotsehyde.Models.Student;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,8 +8,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
-
-public class Student extends PanacheEntity {
+@Entity
+public class Student extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 

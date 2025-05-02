@@ -13,12 +13,11 @@ public class StudentService {
 
     @Transactional
     public StudentDto.StudentData createStudent(StudentDto.StudentCreate s) {
-        //write the logic ..
         var student = new Student();
         student.setName(s.name());
         student.setEmail(s.email());
         student.setPassword(s.password());
-        studentRepo.persist(student);
+        studentRepo.persistAndFlush(student);
         return StudentDto.StudentData.from(student);
     }
 

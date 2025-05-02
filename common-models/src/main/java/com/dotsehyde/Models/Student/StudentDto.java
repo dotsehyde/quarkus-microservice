@@ -1,13 +1,15 @@
 package com.dotsehyde.Models.Student;
 
+import jakarta.validation.constraints.*;
+
 import java.util.Date;
 
 public record StudentDto() {
 
     public record StudentCreate(
-            String name,
-            String email,
-            String password
+           @NotEmpty String name,
+           @Email(message = "Invalid email") String email,
+           @NotEmpty String password
     ) {
     }
 
